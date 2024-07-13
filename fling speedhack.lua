@@ -8,9 +8,9 @@ local Section = Tab:NewSection("Speed Hack")
 
 local speedMultiplier = 1 
 local maxSpeed = 500
-local minSpeed = 0
+local minSpeed = 1
 
-local speedSlider = Section:NewSlider("Speed Multiplier", "Adjust the speed hack multiplier", 50, 0, function(s)
+local speedSlider = Section:NewSlider("Speed Multiplier", "Adjust the speed hack multiplier", 50, 1, function(s)
     speedMultiplier = s
 end)
 
