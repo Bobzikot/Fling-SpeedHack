@@ -1,12 +1,12 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Robojini/Tuturial_UI_Library/main/UI_Template_1"))()
 
-local Window = Library.CreateLib ("Speedhack Fling", "RJTheme1")
+local Window = Library.CreateLib("Speedhack Fling", "RJTheme1")
 
-local Tab = Window:NewTab ("Menu")
+local Tab = Window:NewTab("Menu")
 
 local Section = Tab:NewSection("Speed Hack")
 
-local speedMultiplier = 1 -- Set initial speed multiplier to 1
+local speedMultiplier = 1 
 local maxSpeed = 500
 local minSpeed = 0
 
@@ -31,9 +31,16 @@ local function updateSpeed()
         end
         
         humanoid.WalkSpeed = newSpeed
-        speedSlider:SetValue(newSpeed) -- Update the slider value
+        speedSlider:SetValue(newSpeed) 
     end
 end
+
+local function onCharacterAdded(char)
+    character = char
+    updateSpeed()
+end
+
+player.CharacterAdded:Connect(onCharacterAdded)
 
 game:GetService("RunService").RenderStepped:Connect(updateSpeed)
 
@@ -45,7 +52,7 @@ local function onKeyPress(key)
     if key == toggleKey then
         isSpeedHackEnabled = not isSpeedHackEnabled
         if not isSpeedHackEnabled then
-            -- Reset speed to regular speed when speed hack is disabled
+
             local humanoid = character:FindFirstChild("Humanoid")
             if humanoid then
                 humanoid.WalkSpeed = humanoid.WalkSpeed / speedMultiplier
@@ -59,7 +66,7 @@ game:GetService("UserInputService").InputBegan:Connect(onKeyPress)
 local function onKeyRelease(key)
     if key == toggleKey then
         isSpeedHackEnabled = false
-        -- Reset speed to regular speed when speed hack is disabled
+   
         local humanoid = character:FindFirstChild("Humanoid")
         if humanoid then
             humanoid.WalkSpeed = humanoid.WalkSpeed / speedMultiplier
