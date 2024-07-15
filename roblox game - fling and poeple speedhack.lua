@@ -28,7 +28,7 @@ local toggleKey = Enum.KeyCode.RightShift
 local isSpeedHackEnabled = false
 local function onKeyPress(key)
     if key == toggleKey then
- isSpeedHackEnabled = not isSpeedHackEnabled
+isSpeedHackEnabled = not isSpeedHackEnabled
 local humanoid = character:FindFirstChildOfClass("Humanoid")
         if humanoid then
 humanoid.WalkSpeed = isSpeedHackEnabled and humanoid.WalkSpeed * speedMultiplier or humanoid.WalkSpeed / speedMultiplier
