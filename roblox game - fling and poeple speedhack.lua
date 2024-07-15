@@ -6,7 +6,7 @@ local speedMultiplier = 1
 local maxSpeed = 500
 local minSpeed = 1
 local speedSlider = Section:NewSlider("Speed Multiplier", "Adjust the speed hack multiplier", 50, 1, function(value)
-    speedMultiplier = value
+speedMultiplier = value
 end)
 local player = game.Players.LocalPlayer
 local character = player.Character
@@ -14,24 +14,24 @@ local function updateSpeed()
 local humanoid = character:FindFirstChildOfClass("Humanoid")
     if humanoid then
 local newSpeed = humanoid.WalkSpeed * speedMultiplier
-        newSpeed = math.clamp(newSpeed, minSpeed, maxSpeed)
-        humanoid.WalkSpeed = newSpeed
-        speedSlider:SetValue(newSpeed)
+newSpeed = math.clamp(newSpeed, minSpeed, maxSpeed)
+humanoid.WalkSpeed = newSpeed
+speedSlider:SetValue(newSpeed)
     end
 end
 player.CharacterAdded:Connect(function(character)
-    character = character
-    updateSpeed()
+character = character
+updateSpeed()
 end)
 game:GetService("RunService").RenderStepped:Connect(updateSpeed)
 local toggleKey = Enum.KeyCode.RightShift
 local isSpeedHackEnabled = false
 local function onKeyPress(key)
     if key == toggleKey then
-        isSpeedHackEnabled = not isSpeedHackEnabled
+ isSpeedHackEnabled = not isSpeedHackEnabled
 local humanoid = character:FindFirstChildOfClass("Humanoid")
         if humanoid then
-    humanoid.WalkSpeed = isSpeedHackEnabled and humanoid.WalkSpeed * speedMultiplier or humanoid.WalkSpeed / speedMultiplier
+humanoid.WalkSpeed = isSpeedHackEnabled and humanoid.WalkSpeed * speedMultiplier or humanoid.WalkSpeed / speedMultiplier
         end
     end
 end
