@@ -10,37 +10,29 @@ local speedMultiplier = 1
 local maxSpeed = 500
 local minSpeed = 1
 
-local speedSlider = Section:NewSlider("Speed Multiplier", "Adjust the speed hack multiplier", 50, 1, function(s)
-    speedMultiplier = s
+local speedSlider = Section:NewSlider("Speed Multiplier", "Adjust the speed hack multiplier", 50, 1, function(value)
+    speedMultiplier = value
 end)
 
 local player = game.Players.LocalPlayer
 local character = player.Character
 
 local function updateSpeed()
-    local humanoid = character:FindFirstChild("Humanoid")
+local humanoid = character:FindFirstChildOfClass("Humanoid")
     
     if humanoid then
-        local currentSpeed = humanoid.WalkSpeed
-        local newSpeed = currentSpeed * speedMultiplier
-        
-        if newSpeed > maxSpeed then
-            newSpeed = maxSpeed
-        elseif newSpeed < minSpeed then
-            newSpeed = minSpeed
-        end
+local newSpeed = humanoid.WalkSpeed * speedMultiplier
+        newSpeed = math.clamp(newSpeed, minSpeed, maxSpeed)
         
         humanoid.WalkSpeed = newSpeed
         speedSlider:SetValue(newSpeed)
     end
 end
 
-local function onCharacterAdded(char)
-    character = char
+player.CharacterAdded:Connect(function(character)
+    character = character
     updateSpeed()
-end
-
-player.CharacterAdded:Connect(onCharacterAdded)
+end)
 
 game:GetService("RunService").RenderStepped:Connect(updateSpeed)
 
@@ -51,35 +43,11 @@ local isSpeedHackEnabled = false
 local function onKeyPress(key)
     if key == toggleKey then
         isSpeedHackEnabled = not isSpeedHackEnabled
-        if not isSpeedHackEnabled then
-   
-            local humanoid = character:FindFirstChild("Humanoid")
-            if humanoid then
-                humanoid.WalkSpeed = humanoid.WalkSpeed / speedMultiplier
-            end
+local humanoid = character:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid.WalkSpeed = isSpeedHackEnabled and humanoid.WalkSpeed * speedMultiplier or humanoid.WalkSpeed / speedMultiplier
         end
     end
 end
 
 game:GetService("UserInputService").InputBegan:Connect(onKeyPress)
-
-local function onKeyRelease(key)
-    if key == toggleKey then
-        isSpeedHackEnabled = false
-  
-        local humanoid = character:FindFirstChild("Humanoid")
-        if humanoid then
-            humanoid.WalkSpeed = humanoid.WalkSpeed / speedMultiplier
-        end
-    end
-end
-
-game:GetService("UserInputService").InputEnded:Connect(onKeyRelease)
-
-local function updateSpeedHack()
-    if isSpeedHackEnabled then
-        updateSpeed()
-    end
-end
-
-game:GetService("RunService").RenderStepped:Connect(updateSpeedHack)
