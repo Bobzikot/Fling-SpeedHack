@@ -12,7 +12,7 @@ local player = game.Players.LocalPlayer
 local character = player.Character
 local function updateSpeed()
 local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if humanoid then
+if humanoid then
 local newSpeed = humanoid.WalkSpeed * speedMultiplier
 newSpeed = math.clamp(newSpeed, minSpeed, maxSpeed)
 humanoid.WalkSpeed = newSpeed
@@ -27,10 +27,10 @@ game:GetService("RunService").RenderStepped:Connect(updateSpeed)
 local toggleKey = Enum.KeyCode.RightShift
 local isSpeedHackEnabled = false
 local function onKeyPress(key)
-    if key == toggleKey then
+if key == toggleKey then
 isSpeedHackEnabled = not isSpeedHackEnabled
 local humanoid = character:FindFirstChildOfClass("Humanoid")
-        if humanoid then
+if humanoid then
 humanoid.WalkSpeed = isSpeedHackEnabled and humanoid.WalkSpeed * speedMultiplier or humanoid.WalkSpeed / speedMultiplier
         end
     end
