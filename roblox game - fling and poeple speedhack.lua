@@ -8,6 +8,7 @@ local minSpeed = 1
 local speedSlider = Section:NewSlider("Speed Multiplier", "Adjust the speed hack multiplier", 50, 1, function(value)
 speedMultiplier = value
 end)
+
 local player = game.Players.LocalPlayer
 local character = player.Character
 local function updateSpeed()
@@ -19,10 +20,12 @@ humanoid.WalkSpeed = newSpeed
 speedSlider:SetValue(newSpeed)
     end
 end
+
 player.CharacterAdded:Connect(function(character)
 character = character
 updateSpeed()
 end)
+
 game:GetService("RunService").RenderStepped:Connect(updateSpeed)
 local toggleKey = Enum.KeyCode.RightShift
 local isSpeedHackEnabled = false
